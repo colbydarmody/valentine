@@ -12,23 +12,24 @@
 
         body {
             background-color: #FFF0F3;
-            min-height: 100vh;
-            min-height: 100dvh;
+            height: 100vh;
+            height: 100dvh;
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            padding-top: -18vh;
             overflow: hidden;
             font-family: 'Quicksand', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Main container */
+        /* Main container - constrained to top 80% of screen */
         .container {
             text-align: center;
-            padding: 1.5rem 1.25rem;
+            padding: 2rem 1.25rem;
             max-width: 420px;
             width: 100%;
+            max-height: 80vh;
+            max-height: 80dvh;
             position: relative;
             z-index: 1;
         }
@@ -262,9 +263,10 @@
             var noScale = Math.max(1 - (noCount * 0.06), 0.5);
             noBtn.style.transform = 'scale(' + noScale + ')';
 
-            // Nudge no button to a random side offset
-            var xOff = (Math.random() - 0.5) * 120;
-            noBtn.style.marginLeft = xOff + 'px';
+            // Nudge no button left/right only (never down)
+            var xOff = (Math.random() - 0.5) * 150;
+            noBtn.style.position = 'relative';
+            noBtn.style.left = xOff + 'px';
         });
 
         yesBtn.addEventListener('click', function() {
