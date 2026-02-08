@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>For Ashley</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #FFF0F3;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-family: 'Quicksand', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Main container */
+        .container {
+            text-align: center;
+            padding: 1.5rem 1.25rem;
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Photo */
+        .photo-frame {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 1.25rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #F48FB1;
+            box-shadow: 0 4px 20px rgba(233, 30, 99, 0.25);
+            animation: gentle-bounce 2.5s ease-in-out infinite;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Heading */
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #C2185B;
+            font-size: 1.9rem;
+            margin-bottom: 0.6rem;
+            line-height: 1.3;
+        }
+
+        /* Message */
+        .message {
+            color: #AD1457;
+            font-size: 1.1rem;
+            font-weight: 500;
+            min-height: 1.8rem;
+            margin-bottom: 1.75rem;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            min-height: 140px;
+            position: relative;
+        }
+
+        .btn {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            padding: 14px 36px;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #E91E63, #EC407A);
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.35);
+        }
+
+        .btn-no {
+            background: #F8BBD0;
+            color: #880E4F;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Celebration overlay */
+        .celebration {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #FCE4EC 0%, #FFF0F3 50%, #F8BBD0 100%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .celebration.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .celeb-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .celeb-graphic {
+            font-size: 70px;
+            margin-bottom: 0.75rem;
+            animation: pulse-scale 1.5s ease-in-out infinite;
+        }
+
+        .celeb-content h1 {
+            font-family: 'Pacifico', cursive;
+            color: #C2185B;
+            font-size: 2.8rem;
+            margin-bottom: 0.75rem;
+            animation: pulse-scale 1.5s ease-in-out infinite;
+        }
+
+        .celeb-content p {
+            color: #AD1457;
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+        }
+
+        .celeb-content .sub {
+            font-size: 1rem;
+            opacity: 0.75;
+        }
+
+        @keyframes pulse-scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        @media (min-width: 600px) {
+            .photo-frame { width: 280px; height: 280px; }
+            h1 { font-size: 2.5rem; }
+            .btn { padding: 16px 42px; font-size: 1.2rem; }
+            .container { padding: 2.5rem 2rem; }
+            .celeb-content h1 { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main content -->
+    <div class="container" id="main-container">
+        <div class="photo-frame">
+            <img src="photo.jpeg" alt="Ashley">
+        </div>
+
+        <h1 id="heading">Ashley, will you be my Valentine????</h1>
+
+        <p class="message" id="message">&nbsp;</p>
+
+        <div class="buttons" id="button-area">
+            <button class="btn btn-yes" id="btn-yes">Yes!!!</button>
+            <button class="btn btn-no" id="btn-no">No &#x1F622;</button>
+        </div>
+    </div>
+
+    <!-- Celebration overlay -->
+    <div class="celebration" id="celebration">
+        <div class="celeb-content">
+            <h1>Yaaaay!</h1>
+            <p>I knew you'd say yes!</p>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const yesBtn = document.getElementById('btn-yes');
+        const noBtn = document.getElementById('btn-no');
+        const message = document.getElementById('message');
+        const celebration = document.getElementById('celebration');
+
+        const noMessages = [
+            "Are you sure????????? ",
+            "Really?!?!?!?!",
+            "You have got to be joking \u{1F631}}",
+            "I'll get you Pho",
+            "I'll get you flowers \u{1F97A}",
+            "Please? Pretty please? \u{1F979}",
+            "I wrote all this code for nothing?",
+            "Are you doing this on purpose?",
+            "You meant to click Yes......", 
+            "Okay fine... just kidding, click Yes! \u{1F60F}"
+        ];
+
+        noBtn.addEventListener('click', function() {
+            noCount++;
+
+            // Update message
+            var idx = Math.min(noCount - 1, noMessages.length - 1);
+            message.textContent = noMessages[idx];
+            message.style.animation = 'none';
+            message.offsetHeight; // reflow
+            message.style.animation = 'shake 0.5s ease';
+
+            // Grow yes button by increasing padding and font-size (not scale)
+            var basePadV = 14, basePadH = 36, baseFont = 1.1;
+            var growStep = noCount;
+            yesBtn.style.padding = (basePadV + growStep * 6) + 'px ' + (basePadH + growStep * 14) + 'px';
+            yesBtn.style.fontSize = Math.min(baseFont + growStep * 0.25, 3.5) + 'rem';
+
+            // After enough clicks, make Yes fill the screen
+            if (noCount >= noMessages.length) {
+                yesBtn.style.position = 'fixed';
+                yesBtn.style.inset = '0';
+                yesBtn.style.width = '100%';
+                yesBtn.style.height = '100%';
+                yesBtn.style.borderRadius = '0';
+                yesBtn.style.fontSize = '3rem';
+                yesBtn.style.zIndex = '50';
+                noBtn.style.display = 'none';
+            }
+
+            // Shrink no button slightly
+            var noScale = Math.max(1 - (noCount * 0.06), 0.5);
+            noBtn.style.transform = 'scale(' + noScale + ')';
+
+            // Nudge no button to a random side offset
+            var xOff = (Math.random() - 0.5) * 120;
+            noBtn.style.marginLeft = xOff + 'px';
+        });
+
+        yesBtn.addEventListener('click', function() {
+            // Disable buttons
+            yesBtn.disabled = true;
+            noBtn.disabled = true;
+
+            // Big confetti burst
+            confetti({
+                particleCount: 200,
+                spread: 160,
+                origin: { y: 0.6 },
+                colors: ['#E91E63', '#F06292', '#E53935', '#FF80AB', '#FCE4EC', '#FFFFFF']
+            });
+
+            // Heart confetti
+            try {
+                var heartShape = confetti.shapeFromText({ text: '\u2764\uFE0F', scalar: 2 });
+                confetti({
+                    particleCount: 25,
+                    spread: 100,
+                    origin: { y: 0.5 },
+                    shapes: [heartShape],
+                    scalar: 2
+                });
+            } catch(e) {
+                // fallback if shapeFromText not supported
+                confetti({ particleCount: 80, spread: 120, origin: { y: 0.5 } });
+            }
+
+            // Side cannons for 4 seconds
+            var duration = 4000;
+            var end = Date.now() + duration;
+            (function frame() {
+                confetti({
+                    particleCount: 4,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#E91E63', '#F06292', '#FF80AB']
+                });
+                confetti({
+                    particleCount: 4,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#E91E63', '#F06292', '#FF80AB']
+                });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            })();
+
+            // Show celebration after short delay
+            setTimeout(function() {
+                celebration.style.display = 'flex';
+                // Force reflow then add class for opacity transition
+                celebration.offsetHeight;
+                celebration.classList.add('show');
+
+                // Gentle ongoing confetti
+                var celebEnd = Date.now() + 12000;
+                (function celebFrame() {
+                    confetti({
+                        particleCount: 2,
+                        angle: 60,
+                        spread: 40,
+                        origin: { x: 0, y: 0.5 },
+                        colors: ['#E91E63', '#F06292', '#FF80AB', '#FCE4EC'],
+                        gravity: 0.8
+                    });
+                    confetti({
+                        particleCount: 2,
+                        angle: 120,
+                        spread: 40,
+                        origin: { x: 1, y: 0.5 },
+                        colors: ['#E91E63', '#F06292', '#FF80AB', '#FCE4EC'],
+                        gravity: 0.8
+                    });
+                    if (Date.now() < celebEnd) requestAnimationFrame(celebFrame);
+                })();
+            }, 900);
+        });
+    </script>
+</body>
+</html>
